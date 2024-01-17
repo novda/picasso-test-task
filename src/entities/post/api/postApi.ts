@@ -15,8 +15,8 @@ export const postApi = createApi({
                 }
             })
         }),
-        getPostById: build.query<Post, number>({
-            query: (id: number) => ({
+        getPostById: build.query<Post, string>({
+            query: (id: string) => ({
                 url: `/posts/${id}`,
             })
         })

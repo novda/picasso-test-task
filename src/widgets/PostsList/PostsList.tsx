@@ -14,7 +14,7 @@ const PostsList = () => {
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
-                if (entries[0].isIntersecting) {
+                if (entries[0].isIntersecting && !isLoading) {
                     setCurrentPage(prev => prev + 3)
                 }
             }, { threshold: 0 })
@@ -28,12 +28,12 @@ const PostsList = () => {
                 observer.unobserve(endRef.current)
             }
         }
-    }, [])
+    }, [isLoading])
 
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
-                if (entries[0].isIntersecting) {
+                if (entries[0].isIntersecting && currentPage > 0) {
                     setCurrentPage(prev => prev - 3)
                 }
             }, { threshold: 0 })
@@ -47,14 +47,13 @@ const PostsList = () => {
                 observer.unobserve(beginRef.current)
             }
         }
-    }, [])
+    }, [])  
 
     return (
         <div className='PostsList'>
-            <div ref={beginRef}></div>
+            <div className='PostsList-begin' ref={beginRef}></div>
             {data.map(post => <PostCard post={post} key={post.id} />)}
-            <div ref={endRef}></div>
-
+            <div className='PostsList-end' ref={endRef}></div>
             {isLoading && <div>Loading...</div>}
         </div>
     );

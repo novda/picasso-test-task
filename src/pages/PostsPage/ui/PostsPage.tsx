@@ -1,7 +1,7 @@
 import PostsList from 'widgets/PostsList';
 
-const Posts = () => {
+const PostsPage = () => {
     return <PostsList />
 }
 
-export default Posts
+export default PostsPage
