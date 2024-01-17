@@ -5,8 +5,8 @@ import PostCard from 'entities/post/ui/PostCard'
 import './PostsList.scss'
 
 const PostsList = () => {
-    const [currentPage, setCurrentPage] = useState(0)
-    const { data = [], isLoading } = useGetPostsQuery({ limit: 10, start: currentPage });
+    const [start, setStart] = useState(0)
+    const { data = [], isLoading } = useGetPostsQuery({ limit: 10, start });
 
     const beginRef = useRef(null)
     const endRef = useRef(null)
@@ -15,7 +15,7 @@ const PostsList = () => {
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting && !isLoading) {
-                    setCurrentPage(prev => prev + 3)
+                    setStart(prev => prev + 3)
                 }
             }, { threshold: 0 })
 
@@ -33,8 +33,8 @@ const PostsList = () => {
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
-                if (entries[0].isIntersecting && currentPage > 0) {
-                    setCurrentPage(prev => prev - 3)
+                if (entries[0].isIntersecting) {
+                    setStart(prev => prev - 3 < 0 ? 0 : prev - 3)
                 }
             }, { threshold: 0 })
 
@@ -47,7 +47,7 @@ const PostsList = () => {
                 observer.unobserve(beginRef.current)
             }
         }
-    }, [])  
+    }, [])
 
     return (
         <div className='PostsList'>
