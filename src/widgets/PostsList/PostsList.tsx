@@ -15,7 +15,7 @@ const PostsList = () => {
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting && !isLoading) {
-                    setStart(prev => prev + 3)
+                    setStart(prev => prev >= 90 ? 90 : prev + 3)
                 }
             }, { threshold: 0 })
 
